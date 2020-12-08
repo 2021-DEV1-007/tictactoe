@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class TictactoeApplication {
 
 	public static void main(String[] args) {
+		System.out.println("SpringBootRunner start");
 		SpringApplication.run(TictactoeApplication.class, args);
 	}
 
