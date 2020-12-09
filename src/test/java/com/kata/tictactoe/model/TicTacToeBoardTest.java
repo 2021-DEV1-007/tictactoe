@@ -53,4 +53,45 @@ public class TicTacToeBoardTest {
         assertEquals("X", emptyBoard.getValueOfPos(5));
     }
 
+    // TODO ==> Check Todo @TicTacToeBoard
+    @Test
+    public void shouldCheckIfGivenPositionHasAlreadyBeenFilled() {
+        TicTacToeBoard board = new TicTacToeBoard();
+
+        board.addValueOnPosition("O", 5);
+        assertEquals("O", board.getValueOfPos(5));
+
+        board.addValueOnPosition("X", 5);
+
+        assertEquals("O", board.getValueOfPos(5));
+    }
+
+    @Test
+    public void checksIfAListIsFilledInCompletely_returnsFalse() {
+        TicTacToeBoard board = new TicTacToeBoard();
+        String[] list = {" ", " ", "X"};
+        assertFalse(board.isEveryElementOfLineFilledIn(list));
+    }
+
+    @Test
+    public void checksIfAListIsFilledInCompletely_returnsTrue() {
+        TicTacToeBoard board = new TicTacToeBoard();
+        String[] list = {"O", "O", "X"};
+        assertTrue(board.isEveryElementOfLineFilledIn(list));
+    }
+
+    @Test
+    public void shouldPassIfBoardIsFull() {
+        TicTacToeBoard board = new TicTacToeBoard();
+        board.addValueOnPosition("X", 1);
+        board.addValueOnPosition("O", 2);
+        board.addValueOnPosition("O", 3);
+        board.addValueOnPosition("X", 4);
+        board.addValueOnPosition("X", 5);
+        board.addValueOnPosition("O", 6);
+        board.addValueOnPosition("X", 7);
+        board.addValueOnPosition("O", 8);
+        board.addValueOnPosition("X", 9);
+        assertTrue(board.isBoardFull());
+    }
 }

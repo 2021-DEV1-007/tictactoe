@@ -69,4 +69,20 @@ public class TicTacToeBoard {
         }
     }
 
+    public boolean isEveryElementOfLineFilledIn(String[] line){
+        for(String element : line)
+            if (element.trim().isEmpty())
+                return false;
+        return true;
+    }
+
+    public boolean isBoardFull(){
+        int lineCounter = 0;
+
+        for (String[] line : gameBoardMatrix)
+            if(isEveryElementOfLineFilledIn(line))
+                lineCounter++;
+
+        return lineCounter == maxNumberOfLines;
+    }
 }
