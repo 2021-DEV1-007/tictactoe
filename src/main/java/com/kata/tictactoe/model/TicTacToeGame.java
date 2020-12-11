@@ -50,4 +50,21 @@ public class TicTacToeGame implements Game {
         }
         return false;
     }
+
+    public String declareResult(String playerName) {
+        if (winningMethod == WinnerStatus.FULL)
+            return "It's a draw! the board is full !";
+        else if(winningMethod == WinnerStatus.PLAYER)
+            return "Congratulations: " + playerName + " You have won !";
+        else
+            throw new IllegalArgumentException("declaring a winner is not possible when the game has not ended");
+    }
+
+    public List<String> getRules(){
+        return rules.getRules();
+    }
+
+    public List<String[]> getBoard(){
+        return gameBoard.getGameBoardMatrix();
+    }
 }
