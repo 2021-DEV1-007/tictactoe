@@ -238,4 +238,34 @@ public class TicTacToeBoardTest {
         gameBoard.addValueOnPosition("X",5);
         assertTrue(gameBoard.isThereADiagonalWinner());
     }
+
+    @Test
+    public void passWhenAHorizontalWinnerIsPresent() {
+        assertFalse(gameBoard.isThereAnyWinningLine());
+        gameBoard.addValueOnPosition("X",1);
+        gameBoard.addValueOnPosition("X",2);
+        assertFalse(gameBoard.isThereAnyWinningLine());
+        gameBoard.addValueOnPosition("X",3);
+        assertTrue(gameBoard.isThereAnyWinningLine());
+    }
+
+    @Test
+    public void checksIfAVerticalWinner_returnsTrueForCheckingWinner() {
+        assertFalse(gameBoard.isThereAnyWinningLine());
+        gameBoard.addValueOnPosition("X",1);
+        gameBoard.addValueOnPosition("X",4);
+        assertFalse(gameBoard.isThereAnyWinningLine());
+        gameBoard.addValueOnPosition("X",7);
+        assertTrue(gameBoard.isThereAnyWinningLine());
+    }
+
+    @Test
+    public void checksIfADiagonalWinner_returnsTrueForCheckingWinner() {
+        assertFalse(gameBoard.isThereAnyWinningLine());
+        gameBoard.addValueOnPosition("X",1);
+        gameBoard.addValueOnPosition("X",5);
+        assertFalse(gameBoard.isThereAnyWinningLine());
+        gameBoard.addValueOnPosition("X",9);
+        assertTrue(gameBoard.isThereAnyWinningLine());
+    }
 }
