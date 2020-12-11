@@ -1,5 +1,6 @@
 package com.kata.tictactoe.model;
 
+import com.kata.tictactoe.model.rules.TicTacToeRules;
 import com.kata.tictactoe.utils.WinnerStatus;
 
 import java.util.ArrayList;
@@ -7,25 +8,46 @@ import java.util.List;
 
 public class TicTacToeGame implements Game {
 
+    private WinnerStatus winningMethod = WinnerStatus.NOT_FOUND;
     private final int numberOfPlayers = 2;
 
     private List<TicTacToePlayer> playerList = new ArrayList<>(2);
     private TicTacToeBoard gameBoard;
 
+    private TicTacToeRules rules;
 
-    public TicTacToeGame(){
+    public TicTacToeGame() {
         this.gameBoard = new TicTacToeBoard();
+        this.rules = new TicTacToeRules();
     }
 
     public void addPlayers(List<TicTacToePlayer> playersToAdd) {
-        if(playersToAdd.size() > numberOfPlayers)
+        if (playersToAdd.size() > numberOfPlayers)
             throw new IllegalArgumentException("Trying to add too much players to the game");
-        for(TicTacToePlayer player : playersToAdd)
+        for (TicTacToePlayer player : playersToAdd)
             playerList.add(player);
     }
 
-    public int getNumberOfPlayers(){
+    public int getNumberOfPlayers() {
         return numberOfPlayers;
     }
 
+    public void addValueOnPosition(String playerSymbol, int playersPosChoice) {
+        gameBoard.addValueOnPosition(playerSymbol, playersPosChoice);
+    }
+
+    public boolean isChosenPositionValid(int position) {
+        return gameBoard.getValueOfPos(position).trim().isEmpty();
+    }
+
+    public boolean winnerFoundOrBoardFull() {
+        if (gameBoard.isThereAnyWinningLine()) {
+            winningMethod = WinnerStatus.PLAYER;
+            return true;
+        } else if (gameBoard.isBoardFull()) {
+            winningMethod = WinnerStatus.FULL;
+            return true;
+        }
+        return false;
+    }
 }
