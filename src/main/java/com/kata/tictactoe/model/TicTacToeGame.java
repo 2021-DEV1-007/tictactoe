@@ -64,7 +64,7 @@ public class TicTacToeGame implements Game {
         return rules.getRules();
     }
 
-    public List<String[]> getBoard(){
+    public String[][] getBoard(){
         return gameBoard.getGameBoardMatrix();
     }
 }

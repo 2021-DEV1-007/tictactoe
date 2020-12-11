@@ -177,14 +177,6 @@ public class TicTacToeBoardTest {
     }
 
     @Test
-    public void shouldPassWhenThereIsNoVerticalWinner_WithDifferentPlayerInput() {
-        gameBoard.addValueOnPosition("X",1);
-        gameBoard.addValueOnPosition("O",3);
-        gameBoard.addValueOnPosition("X",7);
-        assertFalse(gameBoard.isThereAVerticalWinner());
-    }
-
-    @Test
     public void shouldPassWhenThereIsNoVerticalButOnlyHorizontalWinner() {
         gameBoard.addValueOnPosition("X",1);
         gameBoard.addValueOnPosition("X",2);

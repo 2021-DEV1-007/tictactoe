@@ -1,24 +1,25 @@
 package com.kata.tictactoe.model;
 
-import java.util.ArrayList;
+import com.kata.tictactoe.utils.TicTacToeBoardValues;
+
 import java.util.Arrays;
 import java.util.List;
 
 public class TicTacToeBoard {
 
-    private List<String[]> gameBoardMatrix;
+    private String[][] gameBoardMatrix;
     private final int maxNumberOfLines = 3;
     private final int maxNumberOfColumns = 3;
 
     public TicTacToeBoard() {
-        gameBoardMatrix = new ArrayList<>(3);
+        gameBoardMatrix = new String[maxNumberOfLines][maxNumberOfColumns];
         for (int i = 0; i < maxNumberOfLines; i++){
-            String[] emptyLine = {" ", " ", " "};
-            gameBoardMatrix.add(emptyLine);
+            for(int j = 0; j < maxNumberOfColumns; j++)
+                gameBoardMatrix[i][j] = TicTacToeBoardValues.EMPTY.getValue();
         }
     }
 
-    public List<String[]> getGameBoardMatrix(){
+    public String[][] getGameBoardMatrix(){
         return gameBoardMatrix;
     }
 
@@ -29,42 +30,26 @@ public class TicTacToeBoard {
     }
 
     public String getValueOfPos(int position) {
-        String valueOfPosition = null;
         int lineOfPos = calculateLineOfPosition(position);
-        int indexOfListToGet = lineOfPos-1;
-        int indexOfPosition = position-1;
+        int indexOfListToGet = lineOfPos;
 
-        if (indexOfListToGet < 1){
-            valueOfPosition = gameBoardMatrix.get(indexOfListToGet)[indexOfPosition];
-        } else if (indexOfListToGet == 1){
-            indexOfPosition = indexOfPosition - 3;
-            valueOfPosition = gameBoardMatrix.get(indexOfListToGet)[indexOfPosition];
-        } else {
-            indexOfPosition = indexOfPosition - 6;
-            valueOfPosition = gameBoardMatrix.get(indexOfListToGet)[indexOfPosition];
-        }
-        return valueOfPosition;
+        int indexOfPosition = (position > 6 ? position - 6 : position > 3 ? position - 3 : position);
+
+        String value = gameBoardMatrix[indexOfListToGet-1][indexOfPosition-1];
+
+        return value;
     }
 
     public void addValueOnPosition(String value, int position) {
-        if (!((value.equals("X")) | (value.equals("O"))))
+        if (!(value.equals(TicTacToeBoardValues.X.getValue()) | (value.equals(TicTacToeBoardValues.O.getValue()))))
            throw new IllegalArgumentException("Something went wrong, wrong player symbol is being added to the board");
 
         int lineOfPos = calculateLineOfPosition(position);
-        int indexOfListToGet = lineOfPos-1;
-        int indexOfPosition = position-1;
+        int indexOfListToGet = lineOfPos;
 
-        String[] line = gameBoardMatrix.get(indexOfListToGet);
+        int indexOfPosition = (position > 6 ? position - 6 : position > 3 ? position - 3 : position);
 
-        if (indexOfListToGet < 1){
-            line[indexOfPosition] = value;
-        } else if (indexOfListToGet == 1){
-            indexOfPosition = indexOfPosition - 3;
-            line[indexOfPosition] = value;
-        } else {
-            indexOfPosition = indexOfPosition - 6;
-            line[indexOfPosition] = value;
-        }
+        gameBoardMatrix[indexOfListToGet-1][indexOfPosition-1] = value;
     }
 
     public boolean isEveryElementOfLineFilledIn(String[] line){
@@ -94,17 +79,13 @@ public class TicTacToeBoard {
     }
 
     public boolean isThereAVerticalWinner(){
-        int elementPosToCheckInLine = 0;
+        String currentValue = null;
+        String lastValue = null;
 
-        while(elementPosToCheckInLine < maxNumberOfColumns) {
+        for (int column = 0; column < maxNumberOfColumns; column++) {
+            for (int line = 0; line < maxNumberOfLines; line++) {
 
-            String currentValue = null;
-            String lastValue = null;
-
-            for (int i = 0; i < maxNumberOfLines; i++) {
-                String[] line = gameBoardMatrix.get(i);
-                currentValue = line[elementPosToCheckInLine];
-
+                currentValue = gameBoardMatrix[line][column];
                 if (currentValue.trim().isEmpty())
                     break;
 
@@ -113,14 +94,11 @@ public class TicTacToeBoard {
 
                 lastValue = currentValue;
 
-                if (i == maxNumberOfLines-1)
+                if (line == maxNumberOfColumns - 1)
                     return true;
             }
-
             lastValue = null;
-            elementPosToCheckInLine++;
         }
-
         return false;
     }
 
