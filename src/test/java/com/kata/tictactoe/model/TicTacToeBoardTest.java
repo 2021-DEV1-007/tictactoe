@@ -113,16 +113,129 @@ public class TicTacToeBoardTest {
 
     @Test
     public void shouldPassIfBoardIsFull() {
-        TicTacToeBoard board = new TicTacToeBoard();
-        board.addValueOnPosition("X", 1);
-        board.addValueOnPosition("O", 2);
-        board.addValueOnPosition("O", 3);
-        board.addValueOnPosition("X", 4);
-        board.addValueOnPosition("X", 5);
-        board.addValueOnPosition("O", 6);
-        board.addValueOnPosition("X", 7);
-        board.addValueOnPosition("O", 8);
-        board.addValueOnPosition("X", 9);
-        assertTrue(board.isBoardFull());
+        gameBoard.addValueOnPosition("X", 1);
+        gameBoard.addValueOnPosition("O", 2);
+        gameBoard.addValueOnPosition("O", 3);
+        gameBoard.addValueOnPosition("X", 4);
+        gameBoard.addValueOnPosition("X", 5);
+        gameBoard.addValueOnPosition("O", 6);
+        gameBoard.addValueOnPosition("X", 7);
+        gameBoard.addValueOnPosition("O", 8);
+        gameBoard.addValueOnPosition("X", 9);
+        assertTrue(gameBoard.isBoardFull());
+    }
+
+    @Test
+    public void shouldPassWhenBoardIsNotFull() {
+        gameBoard.addValueOnPosition("X",4);
+        gameBoard.addValueOnPosition("X",2);
+        assertFalse(gameBoard.isBoardFull());
+    }
+
+    @Test
+    public void shouldPassWhenThereIsAWinningHorizontalLine() {
+        gameBoard.addValueOnPosition("X",1);
+        gameBoard.addValueOnPosition("X",2);
+        gameBoard.addValueOnPosition("X",4);
+        assertFalse(gameBoard.isThereAHorizontalWinner());
+
+        gameBoard.addValueOnPosition("X",3);
+        assertTrue(gameBoard.isThereAHorizontalWinner());
+    }
+
+    @Test
+    public void shouldReturnFalseWhenThereIsNoHorizontalWinner() {
+        gameBoard.addValueOnPosition("X",1);
+        gameBoard.addValueOnPosition("X",2);
+        gameBoard.addValueOnPosition("O",3);
+        assertFalse(gameBoard.isThereAHorizontalWinner());
+    }
+
+    @Test
+    public void shouldPassWhenThereIsAVerticalWinner() {
+        gameBoard.addValueOnPosition("X",1);
+        gameBoard.addValueOnPosition("X",4);
+        gameBoard.addValueOnPosition("X",7);
+        assertTrue(gameBoard.isThereAVerticalWinner());
+    }
+
+    @Test
+    public void shouldPassWhenThereIsNoVerticalWinner() {
+        gameBoard.addValueOnPosition("X",1);
+        gameBoard.addValueOnPosition("X",3);
+        gameBoard.addValueOnPosition("O",4);
+        gameBoard.addValueOnPosition("X",7);
+        assertFalse(gameBoard.isThereAVerticalWinner());
+    }
+
+    @Test
+    public void shouldPassWhenThereIsNoVerticalWinner_WithDifferentInput() {
+        gameBoard.addValueOnPosition("X",1);
+        gameBoard.addValueOnPosition("O",3);
+        gameBoard.addValueOnPosition("X",7);
+        assertFalse(gameBoard.isThereAVerticalWinner());
+    }
+
+    @Test
+    public void shouldPassWhenThereIsNoVerticalWinner_WithDifferentPlayerInput() {
+        gameBoard.addValueOnPosition("X",1);
+        gameBoard.addValueOnPosition("O",3);
+        gameBoard.addValueOnPosition("X",7);
+        assertFalse(gameBoard.isThereAVerticalWinner());
+    }
+
+    @Test
+    public void shouldPassWhenThereIsNoVerticalButOnlyHorizontalWinner() {
+        gameBoard.addValueOnPosition("X",1);
+        gameBoard.addValueOnPosition("X",2);
+        gameBoard.addValueOnPosition("X",3);
+        assertFalse(gameBoard.isThereAVerticalWinner());
+    }
+
+    @Test
+    public void shouldNotFindVeritcalWinner_WithDifferentInput() {
+        gameBoard.addValueOnPosition("X",1);
+        gameBoard.addValueOnPosition("O",4);
+        gameBoard.addValueOnPosition("X",7);
+        assertFalse(gameBoard.isThereAVerticalWinner());
+    }
+
+    @Test
+    public void shouldNotFindADiagonalWinnerWhenThereIsNone(){
+        gameBoard.addValueOnPosition("X",1);
+        gameBoard.addValueOnPosition("O",2);
+        gameBoard.addValueOnPosition("X",9);
+        assertFalse(gameBoard.isThereADiagonalWinner());
+        gameBoard.addValueOnPosition("X",3);
+        assertFalse(gameBoard.isThereADiagonalWinner());
+        gameBoard.addValueOnPosition("O",5);
+        assertFalse(gameBoard.isThereADiagonalWinner());
+    }
+
+    @Test
+    public void shouldFindADiagonalWinnerWhenThereIsOne(){
+        gameBoard.addValueOnPosition("X",1);
+        gameBoard.addValueOnPosition("O",2);
+        gameBoard.addValueOnPosition("X",9);
+        assertFalse(gameBoard.isThereADiagonalWinner());
+        gameBoard.addValueOnPosition("O",3);
+        assertFalse(gameBoard.isThereADiagonalWinner());
+        gameBoard.addValueOnPosition("O",5);
+        assertFalse(gameBoard.isThereADiagonalWinner());
+        gameBoard.addValueOnPosition("X",5);
+        assertTrue(gameBoard.isThereADiagonalWinner());
+    }
+
+    @Test
+    public void shouldFindADiagonalWinnerWhenThereIsAnother(){
+        gameBoard.addValueOnPosition("O",2);
+        gameBoard.addValueOnPosition("X",7);
+        assertFalse(gameBoard.isThereADiagonalWinner());
+        gameBoard.addValueOnPosition("O",3);
+        assertFalse(gameBoard.isThereADiagonalWinner());
+        gameBoard.addValueOnPosition("X",3);
+        assertFalse(gameBoard.isThereADiagonalWinner());
+        gameBoard.addValueOnPosition("X",5);
+        assertTrue(gameBoard.isThereADiagonalWinner());
     }
 }
