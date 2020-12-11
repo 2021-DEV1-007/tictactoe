@@ -16,7 +16,7 @@ Navigate to the source directory of the code and use 'mvn spring-boot:run' to ru
 - Writing tests. 
   - Looking at the rules, I tried to figure out where to implement and test these rules
   - Looking at the application from bottom to top: Player -> Board -> Game -> GameService for writing tests  
-  - Player had no tests at all in the beginning, until introducing the 'Player-X should always start'
+  - Player had no tests at all in the beginning, until introducing the 'Player-X should always start' rule
   - Writing tests for Board class was the next step
     - First I tried to figure out which methods I would need to manipulate the board (FE: calculateLine, addValueToPosition,...)
     - Then writing a test for these methods , this test will fail 
