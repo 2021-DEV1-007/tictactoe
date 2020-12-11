@@ -109,4 +109,36 @@ public class TicTacToeGameTest {
 
         assertTrue(game.winnerFoundOrBoardFull());
     }
+
+    @Test
+    public void addingWrongValue_ShouldThrowException(){
+        Exception ex = assertThrows(IllegalArgumentException.class, () -> game.addValueOnPosition("X",90));
+        String expectedMessage = "between 1 and 9";
+        String actualMessage = ex.getMessage();
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @Test
+    public void checkingIfCorrectGivenPositionIsValid_ShouldPass(){
+        assertTrue(game.isChosenPositionValid(4));
+    }
+
+    @Test
+    public void checkingIfCorrectGivenPositionIsValidShouldPass_WhenFieldIsNotEmpty(){
+        game.addValueOnPosition("X", 4);
+        assertFalse(game.isChosenPositionValid(4));
+    }
+
+    @Test
+    public void checkingIfGivenPositionIsValidWithWrongPosition_ShouldThrowException(){
+        Exception ex = assertThrows(IllegalArgumentException.class, () -> game.isChosenPositionValid(10));
+        String expectedMessage = "between 1 and 9";
+        String actualMessage = ex.getMessage();
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @Test
+    public void declaringWinnerWithoutWinnerHasBeenFound_ShouldThrowException(){
+        assertThrows(IllegalArgumentException.class, () -> game.declareResult(player1.getSymbol()));
+    }
 }
