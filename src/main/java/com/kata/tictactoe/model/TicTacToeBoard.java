@@ -146,4 +146,10 @@ public class TicTacToeBoard {
         }
         return true;
     }
+
+    public boolean isThereAnyWinningLine(){
+        if (isThereAHorizontalWinner() || isThereAVerticalWinner() || isThereADiagonalWinner())
+            return true;
+        return false;
+    }
 }
