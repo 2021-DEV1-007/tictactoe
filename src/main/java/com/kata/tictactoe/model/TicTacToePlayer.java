@@ -1,32 +1,25 @@
 package com.kata.tictactoe.model;
 
-public class TicTacToePlayer {
+public class TicTacToePlayer implements Player {
 
     private int id;
     private String name;
-    private boolean isFirstToPlay;
+    private String symbol;
+
+    public TicTacToePlayer(int id) {
+        this.id = id;
+    }
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getSymbol(){
+        return symbol;
     }
 
-    public boolean isFirstToPlay() {
-        return isFirstToPlay;
-    }
-
-    public void setFirstToPlay(boolean firstToPlay) {
-        isFirstToPlay = firstToPlay;
-    }
 }
