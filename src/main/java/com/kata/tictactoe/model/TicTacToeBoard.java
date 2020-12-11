@@ -83,4 +83,67 @@ public class TicTacToeBoard {
 
         return lineCounter == maxNumberOfLines;
     }
+
+    public boolean isThereAHorizontalWinner(){
+        for(String[] line : gameBoardMatrix) {
+            if (!line[0].trim().isEmpty())
+                if (line[0].equals(line[1]) && line[0].equals(line[2]))
+                    return true;
+        }
+        return false;
+    }
+
+    public boolean isThereAVerticalWinner(){
+        int elementPosToCheckInLine = 0;
+
+        while(elementPosToCheckInLine < maxNumberOfColumns) {
+
+            String currentValue = null;
+            String lastValue = null;
+
+            for (int i = 0; i < maxNumberOfLines; i++) {
+                String[] line = gameBoardMatrix.get(i);
+                currentValue = line[elementPosToCheckInLine];
+
+                if (currentValue.trim().isEmpty())
+                    break;
+
+                if (lastValue != null && !currentValue.trim().equals(lastValue.trim()))
+                    break;
+
+                lastValue = currentValue;
+
+                if (i == maxNumberOfLines-1)
+                    return true;
+            }
+
+            lastValue = null;
+            elementPosToCheckInLine++;
+        }
+
+        return false;
+    }
+
+    public boolean isThereADiagonalWinner(){
+        return checkIfDiagonalWinnerForPositions(Arrays.asList(1,5,9)) | checkIfDiagonalWinnerForPositions(Arrays.asList(3,5,7));
+    }
+
+
+    private boolean checkIfDiagonalWinnerForPositions(List<Integer> posToCheck){
+        String currentValue = null;
+        String lastValue = null;
+
+        for(int pos : posToCheck) {
+            currentValue = getValueOfPos(pos);
+
+            if (currentValue.trim().isEmpty())
+                return false;
+
+            if (lastValue != null && lastValue != currentValue)
+                return false;
+
+            lastValue = currentValue;
+        }
+        return true;
+    }
 }
