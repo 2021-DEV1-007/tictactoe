@@ -1,10 +1,8 @@
-# TicTacToe Kata
+# TicTacToe Kata - Tim Verté
 
 # How to run the tests
 
 Navigate to the source directory of the code and run 'mvn test'
-
-# How to compile
 
 # How to build/run
 
