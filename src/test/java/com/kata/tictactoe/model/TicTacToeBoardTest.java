@@ -1,15 +1,21 @@
 package com.kata.tictactoe.model;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TicTacToeBoardTest {
 
+    private TicTacToeBoard gameBoard;
+
+    @BeforeEach
+    public void setUp(){
+        gameBoard = new TicTacToeBoard();
+    }
+
     @Test
     public void shouldMakeANewEmptyGameBoard() {
-        TicTacToeBoard gameBoard = new TicTacToeBoard();
-
         assertNotNull(gameBoard);
         assertEquals(" ", gameBoard.getValueOfPos(1));
         assertEquals(" ", gameBoard.getValueOfPos(4));
@@ -18,8 +24,6 @@ public class TicTacToeBoardTest {
 
     @Test
     public void shouldGiveTheCorrectLineInTheBoardmatrixOfTheGivenPosition() {
-        TicTacToeBoard gameBoard = new TicTacToeBoard();
-
         int positionToCheck = 9;
         assertEquals(3, gameBoard.calculateLineOfPosition(positionToCheck));
 
@@ -31,53 +35,80 @@ public class TicTacToeBoardTest {
     }
 
     @Test
+    public void calculatingLineForWrongPosition_ShouldThrowIllegalArgumentException() {
+        assertThrows(IllegalArgumentException.class,
+                ()->gameBoard.calculateLineOfPosition(-1));
+        Exception ex = assertThrows(IllegalArgumentException.class,
+                ()->gameBoard.calculateLineOfPosition(10));
+
+        String expectedMessage = "The given position has to be between 1 and 9";
+        String actualMessage = ex.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @Test
+    public void gettingValueOfWrongPosition_ShouldThrowAnIllegalArgumentException() {
+        assertThrows(IllegalArgumentException.class,
+                ()->gameBoard.getValueOfPos(-1));
+        Exception ex = assertThrows(IllegalArgumentException.class,
+                ()->gameBoard.getValueOfPos(10));
+
+        String expectedMessage = "The given position has to be between 1 and 9";
+        String actualMessage = ex.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @Test
     public void shouldAddAValueToTheBoardOnGivenPosition() {
-        TicTacToeBoard emptyBoard = new TicTacToeBoard();
         String xValue = "X";
         String oValue = "O";
 
-        emptyBoard.addValueOnPosition(xValue, 5);
-        emptyBoard.addValueOnPosition(oValue, 9);
+        gameBoard.addValueOnPosition(xValue, 5);
+        gameBoard.addValueOnPosition(oValue, 9);
 
-        assertEquals("X", emptyBoard.getValueOfPos(5));
-        assertEquals("O", emptyBoard.getValueOfPos(9));
+        assertEquals("X", gameBoard.getValueOfPos(5));
+        assertEquals("O", gameBoard.getValueOfPos(9));
     }
 
     @Test
     public void shouldGetAValueOfAGivenPosition() {
-        TicTacToeBoard emptyBoard = new TicTacToeBoard();
         String xValue = "X";
-
-        assertEquals(" ", emptyBoard.getValueOfPos(5));
-        emptyBoard.addValueOnPosition(xValue, 5);
-        assertEquals("X", emptyBoard.getValueOfPos(5));
-    }
-
-    // TODO ==> Check Todo @TicTacToeBoard
-    @Test
-    public void shouldCheckIfGivenPositionHasAlreadyBeenFilled() {
-        TicTacToeBoard board = new TicTacToeBoard();
-
-        board.addValueOnPosition("O", 5);
-        assertEquals("O", board.getValueOfPos(5));
-
-        board.addValueOnPosition("X", 5);
-
-        assertEquals("O", board.getValueOfPos(5));
+        assertEquals(" ", gameBoard.getValueOfPos(5));
+        gameBoard.addValueOnPosition(xValue, 5);
+        assertEquals("X", gameBoard.getValueOfPos(5));
     }
 
     @Test
-    public void checksIfAListIsFilledInCompletely_returnsFalse() {
-        TicTacToeBoard board = new TicTacToeBoard();
+    public void addingValueOnWrongPosition_ShouldThrowException() {
+        Exception ex = assertThrows(IllegalArgumentException.class,() -> gameBoard.addValueOnPosition("X", -1));
+        String expectedMessage = "The given position has to be between 1 and 9";
+        String actualMessage = ex.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @Test
+    public void addingWrongValueOnPosition_ShouldThrowException() {
+        Exception ex = assertThrows(IllegalArgumentException.class,() -> gameBoard.addValueOnPosition("K", 3));
+
+        String expectedMessage = "Something went wrong, wrong player symbol is being added to the board";
+        String actualMessage = ex.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @Test
+    public void checksIfAListIsFilledInCompletely_ReturnsFalseWhenItIsNot() {
         String[] list = {" ", " ", "X"};
-        assertFalse(board.isEveryElementOfLineFilledIn(list));
+        assertFalse(gameBoard.isEveryElementOfLineFilledIn(list));
     }
 
     @Test
-    public void checksIfAListIsFilledInCompletely_returnsTrue() {
-        TicTacToeBoard board = new TicTacToeBoard();
+    public void checksIfAListIsFilledInCompletely_ReturnsTrue() {
         String[] list = {"O", "O", "X"};
-        assertTrue(board.isEveryElementOfLineFilledIn(list));
+        assertTrue(gameBoard.isEveryElementOfLineFilledIn(list));
     }
 
     @Test
