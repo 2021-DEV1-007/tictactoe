@@ -31,6 +31,20 @@ public class TicTacToeGameService implements GameService {
         }
     }
 
+    public void displayTheBoard(){
+        scan.sayToPlayer("\n-------------");
+        for(String[] line: game.getBoard()) {
+            scan.sayToPlayer("| " + line[0] + " | " + line[1] + " | " + line[2] + " |");
+            scan.sayToPlayer("-------------");
+        }
+    }
+
+    public void showRules(){
+        scan.sayToPlayer("\nThese are the rules:");
+        for(String rule : game.getRules())
+            scan.sayToPlayer(rule);
+    }
+
     @Override
     public void addPlayersToGame(){
         game.addPlayers(playerList);
