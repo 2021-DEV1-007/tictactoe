@@ -58,4 +58,55 @@ public class TicTacToeGameTest {
         assertThrows(IllegalArgumentException.class, () ->
             game.addPlayers(playerList));
     }
+
+    @Test
+    public void aVerticalWinnerShouldBeFound() {
+        List<TicTacToePlayer> playerList = new ArrayList<>();
+
+        playerList.add(player1);
+        playerList.add(player2);
+
+        game.addValueOnPosition("X", 1);
+        game.addValueOnPosition("X", 4);
+        game.addValueOnPosition("X", 7);
+
+        assertTrue(game.winnerFoundOrBoardFull());
+    }
+
+    @Test
+    public void noWinnerShouldBeFound_WhenThereIsNoWinnerAndBoardIsNotFull() {
+        List<TicTacToePlayer> playerList = new ArrayList<>();
+
+        playerList.add(player1);
+        playerList.add(player2);
+
+        game.addValueOnPosition("X", 1);
+        game.addValueOnPosition("O", 4);
+        game.addValueOnPosition("X", 7);
+
+        assertFalse(game.winnerFoundOrBoardFull());
+    }
+
+    @Test
+    public void shouldPassWhenBoardIsFullAndNoLineWinnerIsFound() {
+        List<TicTacToePlayer> playerList = new ArrayList<>();
+
+        playerList.add(player1);
+        playerList.add(player2);
+
+        game.addValueOnPosition("X", 1);
+        game.addValueOnPosition("O", 2);
+        game.addValueOnPosition("X", 3);
+
+        assertFalse(game.winnerFoundOrBoardFull());
+
+        game.addValueOnPosition("O",5);
+        game.addValueOnPosition("X",4);
+        game.addValueOnPosition("O",6);
+        game.addValueOnPosition("X",8);
+        game.addValueOnPosition("O",7);
+        game.addValueOnPosition("X",9);
+
+        assertTrue(game.winnerFoundOrBoardFull());
+    }
 }
